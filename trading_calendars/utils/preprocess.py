@@ -8,7 +8,7 @@ stuff later on.
 """
 from textwrap import dedent
 from types import CodeType
-from inspect import getargspec
+from inspect import getfullargspec
 from uuid import uuid4
 
 from toolz.curried.operator import getitem
@@ -90,7 +90,8 @@ def preprocess(*_unused, **processors):
         raise TypeError("preprocess() doesn't accept positional arguments")
 
     def _decorator(f):
-        args, varargs, varkw, defaults = argspec = getargspec(f)
+        args, varargs, varkw, defaults, \
+            kwonlyargs, kwonlydefaults, annotations = argspec = getfullargspec(f)
         if defaults is None:
             defaults = ()
         no_defaults = (NO_DEFAULT,) * (len(args) - len(defaults))
