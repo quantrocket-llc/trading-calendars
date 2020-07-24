@@ -85,7 +85,7 @@ class XPARExchangeCalendar(TradingCalendar):
     def name(self):
         # Euronext Paris
         return 'XPAR'
-
+    country_code = "FR"
     tz = timezone('Europe/Paris')
 
     open_times = (

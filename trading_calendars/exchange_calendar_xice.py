@@ -98,6 +98,7 @@ class XICEExchangeCalendar(TradingCalendar):
       - None
     """
     name = 'XICE'
+    country_code = "IS"
     tz = timezone('Atlantic/Reykjavik')
     open_times = (
         (None, time(9, 31)),

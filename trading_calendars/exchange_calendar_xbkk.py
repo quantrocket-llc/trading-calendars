@@ -78,7 +78,7 @@ class XBKKExchangeCalendar(TradingCalendar):
       - None
     """
     name = 'XBKK'
-
+    country_code = "TH"
     tz = timezone('Asia/Bangkok')
 
     open_times = (

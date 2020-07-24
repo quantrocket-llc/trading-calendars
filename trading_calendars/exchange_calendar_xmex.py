@@ -102,6 +102,7 @@ class XMEXExchangeCalendar(TradingCalendar):
       - None
     """
     name = 'XMEX'
+    country_code = "MX"
     tz = timezone('America/Mexico_City')
 
     open_times = (

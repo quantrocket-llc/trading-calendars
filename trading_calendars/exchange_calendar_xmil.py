@@ -63,7 +63,7 @@ class XMILExchangeCalendar(TradingCalendar):
       - None
     """
     name = 'XMIL'
-
+    country_code = "IT"
     # Rome is the same timezone as Milan.
     tz = timezone('Europe/Rome')
 

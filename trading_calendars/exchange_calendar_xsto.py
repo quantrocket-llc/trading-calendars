@@ -120,6 +120,7 @@ class XSTOExchangeCalendar(TradingCalendar):
       - All Saints' Eve
     """
     name = 'XSTO'
+    country_code = "SE"
     tz = timezone('Europe/Stockholm')
     open_times = (
         (None, time(9, 1)),

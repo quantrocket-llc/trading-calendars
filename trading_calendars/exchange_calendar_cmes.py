@@ -53,6 +53,7 @@ class CMESExchangeCalendar(TradingCalendar):
     - Christmas
     """
     name = 'CME'
+    country_code = "US"
 
     tz = timezone('America/Chicago')
 

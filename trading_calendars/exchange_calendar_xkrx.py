@@ -556,7 +556,7 @@ class XKRXExchangeCalendar(PrecomputedTradingCalendar):
     - Hangeul Proclamation Day
     """
     tz = timezone('Asia/Seoul')
-
+    country_code = "KR"
     open_times = (
         (None, time(9, 1)),
     )

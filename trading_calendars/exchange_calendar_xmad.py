@@ -114,7 +114,7 @@ class XMADExchangeCalendar(TradingCalendar):
     regular_early_close = time(14, 00)
 
     name = 'XMAD'
-
+    country_code = "ES"
     tz = timezone('Europe/Madrid')
 
     open_times = (

@@ -161,7 +161,7 @@ class XNZEExchangeCalendar(TradingCalendar):
     regular_early_close = time(12, 45)
 
     name = 'XNZE'
-
+    country_code = "NZ"
     tz = timezone('NZ')
 
     open_times = (

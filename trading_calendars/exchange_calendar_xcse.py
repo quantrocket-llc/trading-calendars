@@ -90,6 +90,7 @@ class XCSEExchangeCalendar(TradingCalendar):
       - None
     """
     name = 'XCSE'
+    country_code = "DK"
     tz = timezone('Europe/Copenhagen')
     open_times = (
         (None, time(9, 1)),

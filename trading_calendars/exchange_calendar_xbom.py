@@ -340,6 +340,7 @@ class XBOMExchangeCalendar(PrecomputedTradingCalendar):
     """
 
     name = 'XBOM'
+    country_code = "IN"
     tz = timezone('Asia/Calcutta')
     open_times = (
         (None, time(9, 16)),

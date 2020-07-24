@@ -178,6 +178,7 @@ class BVMFExchangeCalendar(TradingCalendar):
     """
 
     name = 'BVMF'
+    country_code = "BR"
 
     tz = timezone("America/Sao_Paulo")
 

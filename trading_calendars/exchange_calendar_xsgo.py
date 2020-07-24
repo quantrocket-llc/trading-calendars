@@ -202,6 +202,7 @@ class XSGOExchangeCalendar(TradingCalendar):
       - Day before Bank Holiday
     """
     name = 'XSGO'
+    country_code = "CL"
     tz = timezone('America/Santiago')
 
     open_times = (

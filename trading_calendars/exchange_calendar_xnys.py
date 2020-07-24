@@ -104,7 +104,7 @@ class XNYSExchangeCalendar(TradingCalendar):
     regular_early_close = time(13)
 
     name = 'XNYS'
-
+    country_code = "US"
     tz = timezone('US/Eastern')
 
     open_times = (

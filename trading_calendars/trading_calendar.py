@@ -182,6 +182,10 @@ class TradingCalendar(with_metaclass(ABCMeta)):
         raise NotImplementedError()
 
     @abstractproperty
+    def country_code(self):
+        raise NotImplementedError()
+
+    @abstractproperty
     def tz(self):
         raise NotImplementedError()
 

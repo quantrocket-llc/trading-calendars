@@ -90,7 +90,7 @@ class XSWXExchangeCalendar(TradingCalendar):
     """
 
     name = 'XSWX'
-
+    country_code = "CH"
     tz = timezone('Europe/Zurich')
 
     open_times = (

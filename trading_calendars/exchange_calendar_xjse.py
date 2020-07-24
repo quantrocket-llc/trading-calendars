@@ -57,7 +57,7 @@ class XJSEExchangeCalendar(TradingCalendar):
     it should be added to ``adhoc_holidays``.
     """
     name = 'XJSE'
-
+    country_code = "ZA"
     tz = timezone('Africa/Johannesburg')
 
     open_times = (

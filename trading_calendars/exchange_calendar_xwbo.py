@@ -100,7 +100,7 @@ class XWBOExchangeCalendar(TradingCalendar):
       - None
     """
     name = 'XWBO'
-
+    country_code = "AT"
     tz = timezone('Europe/Vienna')
 
     open_times = (

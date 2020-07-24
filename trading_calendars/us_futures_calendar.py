@@ -51,6 +51,7 @@ class QuantopianUSFuturesCalendar(TradingCalendar):
         super(QuantopianUSFuturesCalendar, self).__init__(start=start, end=end)
 
     name = 'us_futures'
+    country_code = "US"
     tz = timezone('US/Eastern')
     open_times = (
         (None, time(18, 1)),

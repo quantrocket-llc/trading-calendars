@@ -280,7 +280,7 @@ class XTAIExchangeCalendar(TradingCalendar):
     - None
     """
     name = 'XTAI'
-
+    country_code = "TW"
     tz = timezone('Asia/Taipei')
 
     open_times = (

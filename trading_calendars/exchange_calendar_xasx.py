@@ -142,7 +142,7 @@ class XASXExchangeCalendar(TradingCalendar):
     regular_early_close = time(14, 10)
 
     name = 'XASX'
-
+    country_code = "AU"
     tz = timezone('Australia/Sydney')
 
     open_times = (

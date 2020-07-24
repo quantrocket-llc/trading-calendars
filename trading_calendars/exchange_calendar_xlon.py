@@ -157,7 +157,7 @@ class XLONExchangeCalendar(TradingCalendar):
     regular_early_close = time(12, 30)
 
     name = 'XLON'
-
+    country_code = "GB"
     tz = timezone('Europe/London')
 
     open_times = (

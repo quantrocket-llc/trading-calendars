@@ -163,7 +163,7 @@ class XBOGExchangeCalendar(TradingCalendar):
     - None
     """
     name = 'XBOG'
-
+    country_code = "CO"
     # Though Bogota uses Colombia Standard Time, XBOG uses
     # US Eastern for trading times
     tz = timezone('US/Eastern')

@@ -146,7 +146,7 @@ class XBUDExchangeCalendar(TradingCalendar):
     - None
     """
     name = 'XBUD'
-
+    country_code = "HU"
     tz = timezone('Europe/Budapest')
 
     open_times = (

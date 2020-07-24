@@ -78,7 +78,7 @@ class XKLSExchangeCalendar(TradingCalendar):
     ignoring this for now.
     """
     name = 'XKLS'
-
+    country_code = "MY"
     tz = timezone('Asia/Kuala_Lumpur')
 
     open_times = (

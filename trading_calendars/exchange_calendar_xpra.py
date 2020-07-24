@@ -125,7 +125,7 @@ class XPRAExchangeCalendar(TradingCalendar):
     - None
     """
     name = 'XPRA'
-
+    country_code = "CZ"
     tz = timezone('Europe/Prague')
 
     open_times = (

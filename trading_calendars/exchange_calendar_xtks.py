@@ -84,7 +84,7 @@ class XTKSExchangeCalendar(TradingCalendar):
         super(XTKSExchangeCalendar, self).__init__(start=start, end=end)
 
     name = 'XTKS'
-
+    country_code = "JP"
     tz = timezone('Asia/Tokyo')
 
     open_times = (

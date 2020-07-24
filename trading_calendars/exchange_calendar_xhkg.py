@@ -119,6 +119,7 @@ class XHKGExchangeCalendar(TradingCalendar):
     - Closes frequently for severe weather.
     """
     name = 'XHKG'
+    country_code = "HK"
     tz = timezone('Asia/Hong_Kong')
 
     open_times = (

@@ -52,7 +52,7 @@ class XKARExchangeCalendar(TradingCalendar):
     Occasional election and bank holidays are also observed.
     """
     name = 'XKAR'
-
+    country_code = "PK"
     tz = timezone('Asia/Karachi')
 
     # NOTE: The Pakistan Stock Exchange is open from 09:32-15:30

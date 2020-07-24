@@ -87,7 +87,7 @@ class XBRUExchangeCalendar(TradingCalendar):
     def name(self):
         # Euronext Brussels
         return 'XBRU'
-
+    country_code = "BE"
     tz = timezone('Europe/Brussels')
 
     open_times = (

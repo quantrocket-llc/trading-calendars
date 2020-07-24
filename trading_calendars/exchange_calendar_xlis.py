@@ -127,7 +127,7 @@ class XLISExchangeCalendar(TradingCalendar):
     def name(self):
         # Euronext Lisbon
         return 'XLIS'
-
+    country_code = "PT"
     tz = timezone('Europe/Lisbon')
 
     open_times = (

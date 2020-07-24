@@ -193,7 +193,7 @@ class XPHSExchangeCalendar(TradingCalendar):
     - None
     """
     name = 'XPHS'
-
+    country_code = "PH"
     tz = timezone('Asia/Manila')
 
     open_times = (

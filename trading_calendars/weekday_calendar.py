@@ -10,6 +10,7 @@ class WeekdayCalendar(TradingCalendar):
     weekday.
     """
     name = '24/5'
+    country_code = "US"
     tz = UTC
     open_times = (
         (None, time(0)),

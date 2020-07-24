@@ -62,7 +62,7 @@ class XIDXExchangeCalendar(TradingCalendar):
     leave" days around many holidays.
     """
     name = 'XIDX'
-
+    country_code = "ID"
     tz = timezone('Asia/Jakarta')
 
     open_times = (

@@ -127,7 +127,7 @@ class XISTExchangeCalendar(TradingCalendar):
     - Republic Day (Oct 28)
     """
     name = 'XIST'
-
+    country_code = "TR"
     tz = timezone('Europe/Istanbul')
 
     open_times = (

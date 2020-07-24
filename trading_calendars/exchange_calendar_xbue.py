@@ -257,7 +257,7 @@ class XBUEExchangeCalendar(TradingCalendar):
     - New Year's Eve
     """
     name = 'XBUE'
-
+    country_code = "AR"
     tz = timezone('America/Argentina/Buenos_Aires')
 
     open_times = (

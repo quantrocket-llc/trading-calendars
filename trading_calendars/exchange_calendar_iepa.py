@@ -32,6 +32,7 @@ class IEPAExchangeCalendar(TradingCalendar):
     https://www.theice.com/publicdocs/futures_us/ICE_Futures_US_Regular_Trading_Hours.pdf # noqa
     """
     name = 'IEPA'
+    country_code = "US"
 
     tz = timezone("US/Eastern")
 

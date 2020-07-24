@@ -114,6 +114,7 @@ class XLIMExchangeCalendar(TradingCalendar):
       - None
     """
     name = 'XLIM'
+    country_code = "PE"
     tz = timezone('America/Lima')
 
     open_times = (

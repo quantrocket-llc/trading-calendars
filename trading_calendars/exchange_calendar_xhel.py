@@ -75,6 +75,7 @@ class XHELExchangeCalendar(TradingCalendar):
       - None
     """
     name = 'XHEL'
+    country_code = "FI"
     tz = timezone('Europe/Helsinki')
     open_times = (
         (None, time(10, 1)),

@@ -75,6 +75,7 @@ class XOSLExchangeCalendar(TradingCalendar):
       - Holy Wednesday
     """
     name = 'XOSL'
+    country_code = "NO"
     tz = timezone('Europe/Oslo')
     open_times = (
         (None, time(9, 1)),

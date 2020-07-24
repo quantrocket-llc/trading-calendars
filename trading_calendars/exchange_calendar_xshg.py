@@ -497,6 +497,7 @@ class XSHGExchangeCalendar(PrecomputedTradingCalendar):
     """
 
     name = "XSHG"
+    country_code = "CN"
     tz = timezone("Asia/Shanghai")
     open_times = (
         (None, time(9, 31)),

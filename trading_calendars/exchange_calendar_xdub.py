@@ -126,6 +126,7 @@ class XDUBExchangeCalendar(TradingCalendar):
       - New Year's Eve
     """
     name = 'XDUB'
+    country_code = "IE"
     tz = timezone('Europe/Dublin')
     open_times = (
         (None, time(8, 1)),

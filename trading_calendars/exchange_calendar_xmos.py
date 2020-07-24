@@ -262,7 +262,7 @@ class XMOSExchangeCalendar(TradingCalendar):
       - None
     """
     name = 'XMOS'
-
+    country_code = "RU"
     tz = timezone('Europe/Moscow')
 
     open_times = (

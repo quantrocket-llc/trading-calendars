@@ -88,6 +88,8 @@ class XAMSExchangeCalendar(TradingCalendar):
         # Euronext Amsterdam
         return 'XAMS'
 
+    country_code = "NL"
+
     tz = timezone('Europe/Amsterdam')
 
     open_times = (

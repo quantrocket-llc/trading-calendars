@@ -106,7 +106,7 @@ class XFRAExchangeCalendar(TradingCalendar):
     regular_early_close = time(12, 30)
 
     name = 'XFRA'
-
+    country_code = "DE"
     tz = timezone('CET')
 
     open_times = (

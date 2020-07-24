@@ -118,6 +118,7 @@ class ASEXExchangeCalendar(TradingCalendar):
     - None
     """
     name = 'ASEX'
+    country_code = "GR"
 
     tz = timezone('Europe/Athens')
 

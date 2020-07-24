@@ -35,7 +35,7 @@ class XCBFExchangeCalendar(TradingCalendar):
     (We are ignoring extended trading hours for now)
     """
     name = 'XCBF'
-
+    country_code = "US"
     tz = timezone("America/Chicago")
 
     open_times = (

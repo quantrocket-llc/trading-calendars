@@ -128,7 +128,7 @@ class XTSEExchangeCalendar(TradingCalendar):
     regular_early_close = time(13)
 
     name = 'XTSE'
-
+    country_code = "CA"
     tz = timezone('America/Toronto')
 
     open_times = (

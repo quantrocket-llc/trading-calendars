@@ -110,7 +110,7 @@ class XWARExchangeCalendar(TradingCalendar):
       - None
     """
     name = 'XWAR'
-
+    country_code = "PL"
     tz = timezone('Europe/Warsaw')
 
     open_times = (

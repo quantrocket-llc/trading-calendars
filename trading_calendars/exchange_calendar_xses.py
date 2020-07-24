@@ -368,6 +368,7 @@ class XSESExchangeCalendar(PrecomputedTradingCalendar):
     """
 
     name = "XSES"
+    country_code = "SG"
     tz = timezone("Asia/Singapore")
     open_times = (
         (None, time(9, 1)),

@@ -8,6 +8,7 @@ class AlwaysOpenCalendar(TradingCalendar):
     """A TradingCalendar for an exchange that's open every minute of every day.
     """
     name = '24/7'
+    country_code = "US"
     tz = UTC
     weekmask = '1111111'
     open_times = (
