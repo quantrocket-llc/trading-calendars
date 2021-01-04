@@ -53,6 +53,7 @@ assert_index_equal = testing.assert_index_equal
 class FakeCalendar(TradingCalendar):
     name = 'DMY'
     tz = 'Asia/Ulaanbaatar'
+    country_code = 'ZZ'
     open_times = (
         (None, time(11, 13)),
     )
