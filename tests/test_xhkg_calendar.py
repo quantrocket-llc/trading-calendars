@@ -24,13 +24,13 @@ class XHKGCalendarTestCase(ExchangeCalendarTestBase, TestCase):
         # range should fail.
 
         with self.assertRaises(ValueError) as e:
-            self.calendar_class(T('1980-12-31'), T('2000-01-01'))
+            self.calendar_class(T('1958-12-31'), T('2000-01-01'))
 
         self.assertEqual(
             str(e.exception),
             (
-                'the lunisolar holidays have only been computed back to 1981,'
-                ' cannot instantiate the XHKG calendar back to 1980'
+                'the lunisolar holidays have only been computed back to 1960,'
+                ' cannot instantiate the XHKG calendar back to 1958'
             ),
         )
 
@@ -43,6 +43,38 @@ class XHKGCalendarTestCase(ExchangeCalendarTestBase, TestCase):
                 'the lunisolar holidays have only been computed through 2049,'
                 ' cannot instantiate the XHKG calendar in 2050'
             ),
+        )
+
+    def test_session_break(self):
+        # Test that the calendar correctly reports itself as closed during
+        # session break
+        normal_minute = pd.Timestamp('2003-01-27 03:30:00')
+        break_minute = pd.Timestamp('2003-01-27 04:30:00')
+
+        self.assertTrue(self.calendar.is_open_on_minute(normal_minute))
+        self.assertFalse(self.calendar.is_open_on_minute(break_minute))
+        # Make sure that ignoring breaks indicates the exchange is open
+        self.assertTrue(
+            self.calendar.is_open_on_minute(break_minute, ignore_breaks=True)
+        )
+
+        current_session_label = self.calendar.minute_to_session_label(
+            normal_minute,
+            direction="none"
+        )
+        self.assertEqual(
+            current_session_label,
+            self.calendar.minute_to_session_label(
+                break_minute,
+                direction="previous"
+            )
+        )
+        self.assertEqual(
+            current_session_label,
+            self.calendar.minute_to_session_label(
+                break_minute,
+                direction="next"
+            )
         )
 
     def test_lunar_new_year_2003(self):

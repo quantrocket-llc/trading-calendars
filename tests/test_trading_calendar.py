@@ -22,10 +22,9 @@ from unittest import TestCase
 
 import numpy as np
 import pandas as pd
-from nose_parameterized import parameterized
+from parameterized import parameterized
 from pandas import read_csv
 from pandas import Timedelta
-from pandas.util.testing import assert_index_equal
 from pytz import timezone
 from pytz import UTC
 from toolz import concat
@@ -34,7 +33,6 @@ from trading_calendars.errors import (
     CalendarNameCollision,
     InvalidCalendarName,
 )
-
 from trading_calendars import (
     get_calendar,
 )
@@ -47,6 +45,9 @@ from trading_calendars.trading_calendar import (
     days_at_time,
     TradingCalendar,
 )
+from trading_calendars.utils.pandas_utils import testing
+
+assert_index_equal = testing.assert_index_equal
 
 
 class FakeCalendar(TradingCalendar):
@@ -61,11 +62,11 @@ class FakeCalendar(TradingCalendar):
 
 
 class CalendarRegistrationTestCase(TestCase):
-    def setUp(self):
+    def setup_method(self, method):
         self.dummy_cal_type = FakeCalendar
         self.dispatcher = TradingCalendarDispatcher({}, {}, {})
 
-    def tearDown(self):
+    def teardown_method(self, method):
         self.dispatcher.clear_calendars()
 
     def test_register_calendar(self):
@@ -142,7 +143,7 @@ class DaysAtTimeTestCase(TestCase):
     @parameterized.expand([
         # NYSE standard day
         (
-            '2016-07-19', 0, time(9, 31), timezone('US/Eastern'),
+            '2016-07-19', 0, time(9, 31), timezone('America/New_York'),
             '2016-07-19 9:31',
         ),
         # CME standard day
@@ -229,7 +230,7 @@ class ExchangeCalendarTestBase(object):
         )
 
     @classmethod
-    def setupClass(cls):
+    def setup_class(cls):
         cls.answers = cls.load_answer_key(cls.answer_key_filename)
 
         cls.start_date = cls.answers.index[0]
@@ -240,7 +241,7 @@ class ExchangeCalendarTestBase(object):
         cls.one_hour = pd.Timedelta(hours=1)
 
     @classmethod
-    def teardownClass(cls):
+    def teardown_class(cls):
         cls.calendar = None
         cls.answers = None
 
@@ -396,17 +397,16 @@ class ExchangeCalendarTestBase(object):
                 )
 
     def test_minute_to_session_label(self):
-        for idx, info in enumerate(self.answers[1:-2].iterrows()):
-            session_label = info[1].name
-            open_minute = info[1].iloc[0]
-            close_minute = info[1].iloc[1]
+        for idx, (session_label, open_minute, close_minute) in enumerate(
+                self.answers.iloc[1:-2].itertuples(name=None)
+        ):
             hour_into_session = open_minute + self.one_hour
 
             minute_before_session = open_minute - self.one_minute
             minute_after_session = close_minute + self.one_minute
 
-            next_session_label = self.answers.iloc[idx + 2].name
-            previous_session_label = self.answers.iloc[idx].name
+            next_session_label = self.answers.index[idx + 2]
+            previous_session_label = self.answers.index[idx]
 
             # verify that minutes inside a session resolve correctly
             minutes_that_resolve_to_this_session = [
@@ -571,10 +571,28 @@ class ExchangeCalendarTestBase(object):
         _open, _close = self.calendar.open_and_close_for_session(
             full_session_label
         )
+        _break_start, _break_end = (
+            self.calendar.break_start_and_end_for_session(
+                full_session_label
+            )
+        )
+        if not pd.isnull(_break_start):
+            constructed_minutes = np.concatenate([
+                pd.date_range(
+                    start=_open, end=_break_start, freq="min"
+                ),
+                pd.date_range(
+                    start=_break_end, end=_close, freq="min"
+                )
+            ])
+        else:
+            constructed_minutes = pd.date_range(
+                start=_open, end=_close, freq="min"
+            )
 
         np.testing.assert_array_equal(
             minutes,
-            pd.date_range(start=_open, end=_close, freq="min")
+            constructed_minutes,
         )
 
         # early close period
@@ -679,23 +697,48 @@ class ExchangeCalendarTestBase(object):
             np.testing.assert_array_equal(minutes1, minutes2[1:-1])
 
         # manually construct the minutes
-        all_minutes = np.concatenate([
-            pd.date_range(
-                start=first_open,
-                end=first_close,
-                freq="min"
-            ),
-            pd.date_range(
-                start=middle_open,
-                end=middle_close,
-                freq="min"
-            ),
-            pd.date_range(
-                start=last_open,
-                end=last_close,
-                freq="min"
-            )
-        ])
+        first_break_start, first_break_end = (
+            self.calendar.break_start_and_end_for_session(sessions[0])
+        )
+        middle_break_start, middle_break_end = (
+            self.calendar.break_start_and_end_for_session(sessions[1])
+        )
+        last_break_start, last_break_end = (
+            self.calendar.break_start_and_end_for_session(sessions[-1])
+        )
+
+        intervals = [
+            (first_open, first_break_start, first_break_end, first_close),
+            (middle_open, middle_break_start, middle_break_end, middle_close),
+            (last_open, last_break_start, last_break_end, last_close),
+        ]
+        all_minutes = []
+
+        for _open, _break_start, _break_end, _close in intervals:
+            if pd.isnull(_break_start):
+                all_minutes.append(
+                    pd.date_range(
+                        start=_open,
+                        end=_close,
+                        freq="min"
+                    ),
+                )
+            else:
+                all_minutes.append(
+                    pd.date_range(
+                        start=_open,
+                        end=_break_start,
+                        freq="min"
+                    ),
+                )
+                all_minutes.append(
+                    pd.date_range(
+                        start=_break_end,
+                        end=_close,
+                        freq="min"
+                    ),
+                )
+        all_minutes = np.concatenate(all_minutes)
 
         np.testing.assert_array_equal(all_minutes, minutes1)
 
@@ -760,10 +803,8 @@ class ExchangeCalendarTestBase(object):
         self.assertEqual(one_day_distance, 1)
 
     def test_open_and_close_for_session(self):
-        for index, row in self.answers.iterrows():
-            session_label = row.name
-            open_answer = row.iloc[0]
-            close_answer = row.iloc[1]
+        for session_label, open_answer, close_answer in \
+                self.answers.itertuples(name=None):
 
             found_open, found_close = \
                 self.calendar.open_and_close_for_session(session_label)
@@ -784,8 +825,8 @@ class ExchangeCalendarTestBase(object):
             self.answers.index[0],
             self.answers.index[-1],
         )
-
-        pd.util.testing.assert_series_equal(
+        found_opens.index.freq = None
+        testing.assert_series_equal(
             found_opens, self.answers['market_open']
         )
 
@@ -794,8 +835,8 @@ class ExchangeCalendarTestBase(object):
             self.answers.index[0],
             self.answers.index[-1],
         )
-
-        pd.util.testing.assert_series_equal(
+        found_closes.index.freq = None
+        testing.assert_series_equal(
             found_closes, self.answers['market_close']
         )
 
@@ -961,7 +1002,7 @@ class OpenDetectionTestCase(TestCase):
             self.assertTrue(cal.is_open_on_minute(minute))
 
         def NYSE_timestamp(s):
-            return pd.Timestamp(s, tz='US/Eastern').tz_convert(UTC)
+            return pd.Timestamp(s, tz='America/New_York').tz_convert(UTC)
 
         non_market = [
             # After close.

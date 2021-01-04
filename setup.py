@@ -48,7 +48,9 @@ classifiers = [
 reqs = [
     "numpy",
     "pandas",
+    "python-dateutil",
     "pytz",
+    "six",
     "toolz",
 ]
 
@@ -78,12 +80,12 @@ if __name__ == '__main__':
         ),
         install_requires=reqs,
         extras_require={
-            "test": [
+            "dev": [
                 "flake8",
-                "nose",
-                "nose-ignore-docstring",
-                "nose-timer",
+                "pytest",
+                "pytest-benchmark",
                 "parameterized",
+                "pytest-xdist",
             ],
         },
     )
